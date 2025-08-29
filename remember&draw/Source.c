@@ -2,6 +2,7 @@
 #include <conio.h>
 #include <windows.h>
 #include <stdlib.h>
+#include <time.h>
 
 #define UP 72
 #define LEFT 75
@@ -9,21 +10,24 @@
 #define DOWN 80
 
 
-#pragma region 패턴들
-      int heart12x12[12][12] = {
-         { 0,0,0,1,1,0,0,1,1,0,0,0 },
-         { 0,0,1,1,1,1,1,1,1,1,0,0 },
-         { 0,1,1,1,1,1,1,1,1,1,1,0 },
-         { 1,1,1,1,1,1,1,1,1,1,1,1 },
-         { 1,1,1,1,1,1,1,1,1,1,1,1 },
-         { 0,1,1,1,1,1,1,1,1,1,1,0 },
-         { 0,0,1,1,1,1,1,1,1,1,0,0 },
-         { 0,0,0,1,1,1,1,1,1,0,0,0 },
-         { 0,0,0,0,1,1,1,1,0,0,0,0 },
-         { 0,0,0,0,0,1,1,0,0,0,0,0 },
-         { 0,0,0,0,0,0,0,0,0,0,0,0 },
-         { 0,0,0,0,0,0,0,0,0,0,0,0 }
+// 일단 간단한 맵들 난이도당 하나
+#pragma region patterns
+      int cross5x5[5][5] = {
+          { 1,1,1,1,1 },
+          { 1,1,0,1,1 },
+          { 1,0,1,0,1 },
+          { 1,1,0,1,1 },
+          { 1,1,1,1,1 }     
      };
+
+      int smile6x6[6][6] = {
+        { 0,1,1,1,1,0 },
+        { 1,0,0,0,0,1 },
+        { 1,0,1,1,0,1 },
+        { 1,0,0,0,0,1 },
+        { 1,0,1,1,0,1 },
+        { 0,1,1,1,1,0 }
+      };
 
      int star8x8[8][8] = {
          {0,0,0,1,1,0,0,0},
@@ -35,32 +39,27 @@
          {0,0,0,1,1,0,0,0},
          {0,0,0,0,0,0,0,0}
      };
-
-     int smile6x6[6][6] = {
-        {0, 1, 1, 1, 1, 0},
-        { 1,0,0,0,0,1 },
-        { 1,0,1,1,0,1 },
-        { 1,0,0,0,0,1 },
-        { 1,0,1,1,0,1 },
-        { 0,1,1,1,1,0 }
-    };
-
-
-
-
-
 #pragma endregion
 
-
+     // 게임 상태
 enum GameState {
     TITLE_SCREEN,
-    GAME_SCREEN,
+    GAME_SCREEN_HARD,
+    GAME_SCREEN_NORMAL,
+    GAME_SCREEN_EASY,
     GAME_OVER_SCREEN
 };
 
 enum GameState currentState = TITLE_SCREEN;
 
 
+char key;
+int player_x = 0;
+int player_y = 0;
+
+
+
+// 시작 타이틀 화면 그리는 함수
 void drawtitlescreen()
 {
     system("cls");
@@ -82,22 +81,29 @@ void drawtitlescreen()
     printf("        ___) (___   | |    _        \n");
     printf("        \_______/   )_(   (_)       \n");
     printf("\n");
-    printf("   1.6x6    2.8x8   3.12x12 \n");
-    printf("커서이동: w a s d | 그리기,지우기: space\n");
+    printf("1.5x5(쉬움) 2.6x6(보통) 3.8x8(어려움) \n");
+    printf("커서이동: 방향키 | 그리기,지우기: space\n");
 }
 
 void handleTitleInput() {
     if (_kbhit()) {
         char ch = _getch();
-        if (ch == 's' || ch == 'S') {
-            currentState = GAME_SCREEN;  // ���� ����
+        if (ch == '1') {
+            currentState = GAME_SCREEN_EASY; 
         }
-        else if (ch == 'q' || ch == 'Q') {
-            exit(0);  // ���� ����
+        else if (ch == '2') {
+            currentState = GAME_SCREEN_NORMAL;
+        }
+        else if (ch == '3') {
+            currentState = GAME_SCREEN_HARD;
+        }
+        else if (ch == 'q' || ch=='Q') {
+            exit(0);
         }
     }
 }
 
+// 커서만 바로 움직이기
 void move(int x, int y)
 {
     COORD position = { x, y };
@@ -106,9 +112,6 @@ void move(int x, int y)
 
 }
 
-char key;
-int x = 0;
-int y = 0;
 void render(int x, int y)
 {
     COORD position = { x, y };
@@ -131,36 +134,36 @@ void playermove()
     switch (key)
     {
     case UP:
-        if (y >= 0)
+        if (player_y >= 0)
         {
-            y--;
+            player_y--;
         }
 
-        render(x, y);
+        render(player_x, player_y);
         break;
 
     case LEFT:
-        if (x >= 0)
+        if (player_x >= 0)
         {
-            x -= 2;
+            player_x -= 2;
         }
-        render(x, y);
+        render(player_x, player_y);
         break;
 
     case RIGHT:
-        if (x >= 0)
+        if (player_x >= 0)
         {
-            x += 2;
+            player_x += 2;
         }
-        render(x, y);
+        render(player_x, player_y);
         break;
 
     case DOWN:
-        if (y >= 0)
+        if (player_y >= 0)
         {
-            y++;
+            player_y++;
         }
-        render(x, y);
+        render(player_x, player_y);
         break;
 
     default:
@@ -170,6 +173,21 @@ void playermove()
     printf("\n");
 }
 
+
+void drawPattern(int size, int pattern)
+{
+    system("cls");
+    for (int i = 0; i < size; i++)
+    {
+        for (int j = 0; j < size; j++)
+        {
+            
+               
+        }
+    }
+}
+
+
 int main() {
     while (1)
     {
@@ -177,12 +195,24 @@ int main() {
         {
         case TITLE_SCREEN:
             drawtitlescreen();
+            handleTitleInput();
 
             break;
 
-        case GAME_SCREEN:
+        case GAME_SCREEN_EASY:
+            move(3, 3);
+            printf("easy");
 
+            break;
 
+        case GAME_SCREEN_NORMAL:
+            move(3, 3);
+            printf("normal");
+            break;
+
+        case GAME_SCREEN_HARD:
+            move(3, 3);
+            printf("hard");
             break;
 
         case GAME_OVER_SCREEN:
