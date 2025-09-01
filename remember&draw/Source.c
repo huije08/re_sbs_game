@@ -9,7 +9,6 @@
 #define RIGHT 77
 #define DOWN 80
 
-
 // 일단 간단한 맵들 난이도당 하나
 #pragma region patterns
       int cross5x5[5][5] = {
@@ -22,9 +21,9 @@
 
       int smile6x6[6][6] = {
         { 0,1,1,1,1,0 },
-        { 1,0,0,0,0,1 },
         { 1,0,1,1,0,1 },
-        { 1,0,0,0,0,1 },
+        { 1,0,1,1,0,1 },
+        { 1,1,0,0,1,1 },
         { 1,0,1,1,0,1 },
         { 0,1,1,1,1,0 }
       };
@@ -41,7 +40,7 @@
      };
 #pragma endregion
 
-     // 게임 상태
+// 게임 상태
 enum GameState {
     TITLE_SCREEN,
     GAME_SCREEN_HARD,
@@ -49,17 +48,13 @@ enum GameState {
     GAME_SCREEN_EASY,
     GAME_OVER_SCREEN
 };
-
 enum GameState currentState = TITLE_SCREEN;
-
 
 char key;
 int player_x = 0;
 int player_y = 0;
 
-
-
-// 시작 타이틀 화면 그리는 함수
+// 시작 타이틀 화면 그리기
 void drawtitlescreen()
 {
     system("cls");
@@ -173,20 +168,54 @@ void playermove()
     printf("\n");
 }
 
-
-void drawPattern(int size, int pattern)
+// 이지 난이도 출력 함수
+void drawPattern5(int pattern[5][5]) 
 {
     system("cls");
-    for (int i = 0; i < size; i++)
+    for (int i = 0; i < 5; i++) 
     {
-        for (int j = 0; j < size; j++)
+        for (int j = 0; j < 5; j++) 
         {
-            
-               
+            printf(pattern[i][j] ? "■ " : "□ ");
         }
+        printf("\n");
+    }
+}
+// drawPattern5(cross5x5); 호출할땐 이렇게 어차피 랜덤 안함
+
+// 노말 난이도 출력 함수
+void drawPattern6(int pattern[6][6]) 
+{ 
+    system("cls");
+    for (int i = 0; i < 6; i++) 
+    {
+        for (int j = 0; j < 6; j++) 
+        {
+            printf(pattern[i][j] ? "■ " : "□ ");
+        }
+        printf("\n");
     }
 }
 
+// 하드 난이도 출력 함수
+void drawPattern8(int pattern[8][8])
+{
+    system("cls");
+    for (int i = 0; i < 8; i++)
+    {
+        for (int j = 0; j < 8; j++)
+        {
+            printf(pattern[i][j] ? "■ " : "□ ");
+        }
+        printf("\n");
+    }
+}
+
+void drawPlayerGrid()
+{
+    system("cls");
+
+}
 
 int main() {
     while (1)
@@ -194,25 +223,27 @@ int main() {
         switch (currentState)
         {
         case TITLE_SCREEN:
-            drawtitlescreen();
-            handleTitleInput();
+          //  drawtitlescreen();
+           // handleTitleInput();
 
             break;
 
         case GAME_SCREEN_EASY:
-            move(3, 3);
-            printf("easy");
+           // move(3, 3);
+            //drawPattern5(cross5x5);
 
             break;
 
         case GAME_SCREEN_NORMAL:
-            move(3, 3);
-            printf("normal");
+           // move(3, 3);
+            //drawPattern6(smile6x6);
+            
             break;
 
         case GAME_SCREEN_HARD:
-            move(3, 3);
-            printf("hard");
+           // move(3, 3);
+           // drawPattern8(star8x8);
+
             break;
 
         case GAME_OVER_SCREEN:

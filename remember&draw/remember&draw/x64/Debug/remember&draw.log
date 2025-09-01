@@ -1,11 +1,11 @@
 ﻿  Source.c
+C:\Users\huije\OneDrive\바탕 화면\re_sbs_game\remember&draw\Source.c(62,12): warning C4129: ' ': unrecognized character escape sequence
+C:\Users\huije\OneDrive\바탕 화면\re_sbs_game\remember&draw\Source.c(63,12): warning C4129: ' ': unrecognized character escape sequence
+C:\Users\huije\OneDrive\바탕 화면\re_sbs_game\remember&draw\Source.c(66,12): warning C4129: ' ': unrecognized character escape sequence
 C:\Users\huije\OneDrive\바탕 화면\re_sbs_game\remember&draw\Source.c(67,12): warning C4129: ' ': unrecognized character escape sequence
-C:\Users\huije\OneDrive\바탕 화면\re_sbs_game\remember&draw\Source.c(68,12): warning C4129: ' ': unrecognized character escape sequence
-C:\Users\huije\OneDrive\바탕 화면\re_sbs_game\remember&draw\Source.c(71,12): warning C4129: ' ': unrecognized character escape sequence
-C:\Users\huije\OneDrive\바탕 화면\re_sbs_game\remember&draw\Source.c(72,12): warning C4129: ' ': unrecognized character escape sequence
-C:\Users\huije\OneDrive\바탕 화면\re_sbs_game\remember&draw\Source.c(72,12): warning C4129: '_': unrecognized character escape sequence
-C:\Users\huije\OneDrive\바탕 화면\re_sbs_game\remember&draw\Source.c(73,12): warning C4129: '_': unrecognized character escape sequence
-C:\Users\huije\OneDrive\바탕 화면\re_sbs_game\remember&draw\Source.c(73,12): warning C4129: '|': unrecognized character escape sequence
-C:\Users\huije\OneDrive\바탕 화면\re_sbs_game\remember&draw\Source.c(76,12): warning C4129: '_': unrecognized character escape sequence
-C:\Users\huije\OneDrive\바탕 화면\re_sbs_game\remember&draw\Source.c(82,12): warning C4129: '_': unrecognized character escape sequence
+C:\Users\huije\OneDrive\바탕 화면\re_sbs_game\remember&draw\Source.c(67,12): warning C4129: '_': unrecognized character escape sequence
+C:\Users\huije\OneDrive\바탕 화면\re_sbs_game\remember&draw\Source.c(68,12): warning C4129: '_': unrecognized character escape sequence
+C:\Users\huije\OneDrive\바탕 화면\re_sbs_game\remember&draw\Source.c(68,12): warning C4129: '|': unrecognized character escape sequence
+C:\Users\huije\OneDrive\바탕 화면\re_sbs_game\remember&draw\Source.c(71,12): warning C4129: '_': unrecognized character escape sequence
+C:\Users\huije\OneDrive\바탕 화면\re_sbs_game\remember&draw\Source.c(77,12): warning C4129: '_': unrecognized character escape sequence
   remember&draw.vcxproj -> C:\Users\huije\OneDrive\바탕 화면\re_sbs_game\remember&draw\x64\Debug\remember&draw.exe
