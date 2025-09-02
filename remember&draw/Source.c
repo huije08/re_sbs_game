@@ -168,10 +168,25 @@ void playermove()
     printf("\n");
 }
 
+void drawCountdown() // 카운트다운 10초
+{
+    for (int s = 10; s > 0; s--)
+    {
+        printf("화면에 나오는 그림을 외우세요!");
+        printf("\n %d 초 남았습니다....", s);
+
+        Sleep(1000);
+    }
+}
+
 // 이지 난이도 출력 함수
 void drawPattern5(int pattern[5][5]) 
 {
     system("cls");
+
+    drawCountdown();
+
+
     for (int i = 0; i < 5; i++) 
     {
         for (int j = 0; j < 5; j++) 
@@ -209,34 +224,30 @@ void drawPattern8(int pattern[8][8])
         }
         printf("\n");
     }
-}
+}\
 
-void drawPlayerGrid()
-{
-    system("cls");
 
-}
 
 int main() {
+
+
     while (1)
     {
         switch (currentState)
         {
-        case TITLE_SCREEN:
-          //  drawtitlescreen();
-           // handleTitleInput();
+        case TITLE_SCREEN: // 문제없음
+         drawtitlescreen();
+         handleTitleInput();
 
             break;
 
         case GAME_SCREEN_EASY:
-           // move(3, 3);
-            //drawPattern5(cross5x5);
+            move(4, 4);
 
             break;
 
         case GAME_SCREEN_NORMAL:
-           // move(3, 3);
-            //drawPattern6(smile6x6);
+          
             
             break;
 
