@@ -90,12 +90,8 @@ void titleScreen() {
     printf("\n");
     printf("     == Press enter to start ==     \n");
 
-    _getch(); // 엔터 대기
-}
-
-void gameoverScreen()
-{
-
+    // 엔터 대기
+    _getch(); 
 }
 
 void playGame() {
@@ -131,7 +127,13 @@ void playGame() {
 
     // 결과 화면
     system("cls");
-    printf(" === 결과 ===\n\n");
+    printf(" ============================================\n");
+    printf("  ___ ____ ___ _  ___   ___ _  _____ ____\n");
+    printf(" / _ `/ _ `/  ' \\/ -_) / _ \\ |/ / -_) __/\n");
+    printf(" \\_, /\\_,_/_/_/_/\\__/  \\___/___/\\__/_/ \n");
+    printf("/___/                                    \n");
+    printf(" ============================================\n");
+
     printf(" 원래 그림:\n");
     for (int i = 0; i < SIZE; i++) {
         for (int j = 0; j < SIZE; j++) printf(originalBoard[i][j] ? "■ " : "□ ");
