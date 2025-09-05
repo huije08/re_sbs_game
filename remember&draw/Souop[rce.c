@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <windows.h>
 #include <conio.h>
+#include <time.h> 
 
 #define SIZE 5
 #define EMPTY 0
@@ -9,7 +10,6 @@
 
 int originalBoard[SIZE][SIZE];
 int playerBoard[SIZE][SIZE];
-
 int cursorX = 0, cursorY = 0;
 
 // 커서 이동
@@ -26,19 +26,13 @@ void hideCursor() {
     SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &cursorInfo);
 }
 
-// 패턴 생성 (랜덤 필요 없으면 직접 설정 가능)
+// 랜덤패턴 생성하기
 void makePattern() {
-    // 예시: 단순 패턴
-    int temp[SIZE][SIZE] = {
-        {1,0,1,0,1},
-        {0,1,0,1,0},
-        {1,0,1,0,1},
-        {0,1,0,1,0},
-        {1,0,1,0,1}
-    };
-    for (int i = 0; i < SIZE; i++)
-        for (int j = 0; j < SIZE; j++)
-            originalBoard[i][j] = temp[i][j];
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
+            originalBoard[i][j] = rand() % 2;
+        }
+    }
 }
 
 // 패턴 보여주기
@@ -53,16 +47,16 @@ void showPattern() {
     }
 }
 
-// 6초 카운트다운 표시
+// 카운트다운
 void countdown(int sec) {
     for (int i = sec; i > 0; i--) {
         gotoxy(0, SIZE + 1);
-        printf("패턴을 기억하세요: %d초 남음  ", i);
+        printf("패턴을 기억하세요! \n 남은시간 : %ds...  ", i);
         Sleep(1000);
     }
 }
 
-// 플레이어 화면 그리기
+// 화면 그리기
 void drawPlayerBoard() {
     gotoxy(0, 0);
     for (int i = 0; i < SIZE; i++) {
@@ -74,7 +68,7 @@ void drawPlayerBoard() {
     }
 }
 
-// 점수 계산
+// 점수
 int calculateScore() {
     int score = 0;
     for (int i = 0; i < SIZE; i++)
@@ -83,7 +77,7 @@ int calculateScore() {
     return score;
 }
 
-// 시작 화면
+// 타이틀 화면
 void titleScreen() {
     system("cls");
     printf("====================================\n");
@@ -99,25 +93,25 @@ void titleScreen() {
     _getch(); // 엔터 대기
 }
 
-int main() {
-    srand((unsigned int)time(NULL));
-    hideCursor();
+void gameoverScreen()
+{
 
-    // 시작 화면
-    titleScreen();
+}
 
-    // 패턴 생성 및 보여주기
-    makePattern();
-    showPattern();
-    countdown(6); // 6초 카운트다운
+void playGame() {
+    
+    makePattern(); // 패턴 만들고
+    showPattern(); // 패턴보여주면서
+    countdown(5); // 카운트다운
 
-    // 초기화 후 플레이어 그림 모드
+    // 플레이어 화면 초기화
     system("cls");
     for (int i = 0; i < SIZE; i++)
         for (int j = 0; j < SIZE; j++)
             playerBoard[i][j] = 0;
 
     cursorX = cursorY = 0;
+
     int running = 1;
     while (running) {
         drawPlayerBoard();
@@ -130,26 +124,40 @@ int main() {
         else if (key == 'a' && cursorX > 0) cursorX--;
         else if (key == 'd' && cursorX < SIZE - 1) cursorX++;
         else if (key == ' ') playerBoard[cursorY][cursorX] = !playerBoard[cursorY][cursorX];
-        else if (key == '\r') running = 0;
+        else if (key == '\r') running = 0; 
     }
 
-    // 점수 계산
     int score = calculateScore();
 
     // 결과 화면
     system("cls");
-    printf("=== 결과 ===\n");
-    printf("원래 그림:\n");
+    printf(" === 결과 ===\n\n");
+    printf(" 원래 그림:\n");
     for (int i = 0; i < SIZE; i++) {
         for (int j = 0; j < SIZE; j++) printf(originalBoard[i][j] ? "■ " : "□ ");
         printf("\n");
     }
-    printf("\n플레이어 그림:\n");
+    printf("\n 플레이어 그림:\n");
     for (int i = 0; i < SIZE; i++) {
         for (int j = 0; j < SIZE; j++) printf(playerBoard[i][j] ? "■ " : "□ ");
         printf("\n");
     }
-    printf("\n맞춘 칸: %d/%d\n", score, SIZE * SIZE);
+    printf("\n 점수: %d/%d\n", score, SIZE * SIZE);
+
+    // 다시하기
+    printf(" Enter: 다시하기 / q: 종료)\n");
+    int c = _getch();
+    if (c == 'q') exit(0);
+}
+
+int main() {
+    srand((unsigned int)time(NULL));
+    hideCursor();
+
+    while (1) {
+        titleScreen();
+        playGame();
+    }
 
     return 0;
 }
